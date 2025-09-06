@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News Verifier</title>
+    <meta name="backend-base" content="http://127.0.0.1:8000" />
+    <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>News Verifier</h1>
+            <p>Register, login, and check if news is Real or Fake</p>
+        </header>
+
+        <section class="auth">
+            <div class="card">
+                <h2>Register</h2>
+                <div class="form-group">
+                    <label for="regEmail">Email</label>
+                    <input type="email" id="regEmail" placeholder="you@example.com" />
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword" placeholder="********" />
+                </div>
+                <button id="registerBtn">Create account</button>
+                <div id="registerMsg" class="message"></div>
+            </div>
+
+            <div class="card">
+                <h2>Login</h2>
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" placeholder="you@example.com" />
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="********" />
+                </div>
+                <button id="loginBtn">Login</button>
+                <div id="loginMsg" class="message"></div>
+            </div>
+        </section>
+
+        <section class="predict card">
+            <div class="predict-header">
+                <h2>Predict</h2>
+                <div class="auth-state">
+                    <span id="authState">Not logged in</span>
+                    <button id="logoutBtn" class="link" style="display:none">Logout</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="newsText">News Text</label>
+                <textarea id="newsText" rows="7" placeholder="Paste the news text here..."></textarea>
+            </div>
+            <button id="predictBtn" disabled>Predict</button>
+            <div id="predictMsg" class="message"></div>
+            <div id="result" class="result" hidden>
+                <div class="badge" id="label">-</div>
+                <div class="confidence">Confidence: <span id="confidence">-</span></div>
+            </div>
+        </section>
+
+        <footer>
+            <small>Backend: <code id="backendUrl"></code> (set via meta[name="backend-base"] or localStorage key <code>backend_base</code>)</small>
+        </footer>
+    </div>
+
+    <script src="/karthik.js"></script>
+    <script>
+        (function() {
+          const meta = document.querySelector('meta[name="backend-base"]');
+          const fromMeta = meta ? meta.content : '';
+          const fromStore = localStorage.getItem('backend_base') || '';
+          const params = new URLSearchParams(window.location.search);
+          const fromQuery = params.get('backend') || '';
+          const selected = fromQuery || fromStore || fromMeta || window.location.origin;
+          document.getElementById('backendUrl').textContent = selected;
+        })();
+    </script>
+</body>
+</html>
+
